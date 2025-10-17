@@ -5,26 +5,54 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.ViewModelProvider
 
 private const val EXTRA_EMAIL = "email"
 
 class ResetPasswordActivity : AppCompatActivity() {
     private lateinit var editTextEmail: EditText
     private lateinit var buttonResetPassword: Button
+    private lateinit var viewModel: ResetPasswordViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reset_password)
         initViews()
+        viewModel = ViewModelProvider(this@ResetPasswordActivity)
+            .get(ResetPasswordViewModel::class.java)
+        observeViewModel()
         installingEmailFromTheLoginScreen()
 
         buttonResetPassword.setOnClickListener {
             val email = editTextEmail.text.trim().toString()
+            viewModel.resetPassword(email)
         }
+    }
+
+    private fun observeViewModel() {
+        viewModel.error.observe(this, { errorMessage ->
+            if (errorMessage != null) {
+                Toast.makeText(
+                    this@ResetPasswordActivity,
+                    errorMessage,
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        })
+        viewModel.isSuccess.observe(this, { success ->
+            if (success) {
+                Toast.makeText(
+                    this@ResetPasswordActivity,
+                    getString(R.string.reset_link_sent),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        })
     }
 
     private fun installingEmailFromTheLoginScreen() {
