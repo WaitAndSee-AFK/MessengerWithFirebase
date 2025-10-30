@@ -38,7 +38,7 @@ class UsersAdapter : RecyclerView.Adapter<UsersAdapter.UserViewHolder>() {
         val user = users.get(position)
         val userInfo = String.format("%s %s, %s", user.name, user.surname, user.age)
         holder.textViewUserInfo.text = userInfo
-        val backgroundResID = if (user.isOnline) R.drawable.circle_green else R.drawable.circle_red
+        val backgroundResID = if (user.online) R.drawable.circle_green else R.drawable.circle_red
         val background: Drawable = ContextCompat.getDrawable(
             holder.itemView.context,
             backgroundResID

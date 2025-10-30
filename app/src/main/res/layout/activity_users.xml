@@ -1,15 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.recyclerview.widget.RecyclerView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/recyclerViewUsers"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="85dp"
-    android:paddingTop="?attr/actionBarSize"
-    android:padding="8dp"
-    android:background="@color/Skobeloff"
-    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-    tools:listitem="@layout/user_item"
-    tools:context=".UsersActivity" />
+    android:orientation="vertical"
+    android:background="@color/Skobeloff">
+
+    <!-- Добавляем Toolbar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/Skobeloff"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:title="Пользователи"
+        app:titleTextColor="@android:color/white" />
+
+    <!-- Существующий RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewUsers"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="?attr/actionBarSize"
+        android:padding="8dp"
+        android:background="@color/Skobeloff"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/user_item"
+        tools:context=".UsersActivity" />
+
+</LinearLayout>
+

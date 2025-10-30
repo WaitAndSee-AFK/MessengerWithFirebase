@@ -14,4 +14,5 @@
     <string name="reset_password_button">Сбросить пароль</string>
     <string name="logout_menu">Выйти</string>
     <string name="reset_link_sent">The reset link has been successfully sent</string>
+    <string name="type_your_message_hint">Type your message: </string>
 </resources>

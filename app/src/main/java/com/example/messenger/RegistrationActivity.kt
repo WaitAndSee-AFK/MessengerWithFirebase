@@ -40,7 +40,10 @@ class RegistrationActivity : AppCompatActivity() {
     private fun observeViewModel() {
         viewModel.user.observe(this, { firebaseUser ->
             if (firebaseUser != null) {
-                val intent = RegistrationViewModel().newIntent(this@RegistrationActivity)
+                val intent: Intent = UsersActivity().newIntent(
+                    this@RegistrationActivity,
+                    firebaseUser.uid
+                )
                 startActivity(intent)
                 finish()
             }
