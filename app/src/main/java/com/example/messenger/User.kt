@@ -5,5 +5,7 @@ data class User(
     val name: String,
     val surname: String,
     val age: Int,
-    val isOnline: Boolean
-)
+    val online: Boolean
+) {
+    constructor() : this("", "", "", 0, false)
+}

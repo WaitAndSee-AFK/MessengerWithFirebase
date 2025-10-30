@@ -7,8 +7,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 class RegistrationViewModel() : ViewModel() {
+
     private val _error: MutableLiveData<String> = MutableLiveData()
     val error: LiveData<String>
         get() = _error
@@ -16,6 +19,8 @@ class RegistrationViewModel() : ViewModel() {
     val user: LiveData<FirebaseUser>
         get() = _user
 
+    private val database: FirebaseDatabase = FirebaseDatabase.getInstance()
+    private val usersReference: DatabaseReference = database.getReference("Users")
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
     fun signUp(
@@ -26,6 +31,20 @@ class RegistrationViewModel() : ViewModel() {
         age: Int
     ) {
         auth.createUserWithEmailAndPassword(email, password)
+            .addOnSuccessListener { authResult ->
+                val firebaseUser: FirebaseUser? = authResult.user
+                if (firebaseUser == null) {
+                    return@addOnSuccessListener
+                }
+                val user: User = User(
+                    firebaseUser.uid,
+                    name,
+                    surname,
+                    age,
+                    false
+                )
+                usersReference.child(user.id).setValue(user)
+            }
             .addOnFailureListener { exception -> _error.value = exception.toString() }
     }
 

@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
     private fun observeViewModel() {
         viewModel.user.observe(this, { user ->
             if (user != null) {
-                val intent = UsersActivity().newIntent(this@MainActivity)
+                val intent = UsersActivity().newIntent(this@MainActivity, user.uid)
                 startActivity(intent)
                 finish()
             }
